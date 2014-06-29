@@ -7,8 +7,6 @@ require File.join(base_path, 'tasks', 'xcode_task')
 
 require File.join(base_path, 'rake', 'XCode')
 
-
-
 # require File.join(base_path, 'tasks', 'doc')
 # require File.join(base_path, 'tasks', 'gem')
 # require File.join(base_path, 'tasks', 'test')
