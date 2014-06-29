@@ -1,6 +1,4 @@
-require 'rspec'
-require 'rake'
-require "./lib/rake_ci_tools"
+require "spec_helper"
 
 describe 'Testing Xcode Rake File' do
 
