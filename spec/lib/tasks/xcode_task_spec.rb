@@ -4,6 +4,8 @@ describe 'Testing Xcode Rake File' do
 
   before(:each) do
     XCode.stub(:build)
+    XCode.stub(:build_and_test)
+    XCode.stub(:archive) 
   end
   
   after(:each)do
@@ -45,5 +47,15 @@ describe 'Testing Xcode Rake File' do
     expect(XCode).to receive(:build_and_test).with(workspace,scheme,config,destination)
        
     Rake::Task["xcode:build_test"].invoke(workspace,scheme,config,destination)
+  end
+
+  it "should call shenzen to build ipa" do
+    scheme = 'scheme'
+    configuration = 'configuration'
+    profile = 'profile'
+    output_dir = 'sample/output'
+
+    expect(XCode).to receive(:archive).with(scheme,configuration,profile,output_dir)
+    Rake::Task["xcode:archive"].invoke(scheme,configuration,profile,output_dir)
   end
 end

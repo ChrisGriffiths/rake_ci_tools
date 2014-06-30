@@ -1,3 +1,5 @@
+
+
 module XCode
     def self.build(workspace, scheme, configuration, sdk, build_dir)
         if workspace.nil? || scheme.nil? || configuration.nil? || sdk.nil? || build_dir.nil?
@@ -15,11 +17,11 @@ module XCode
         sh "xcodebuild test -workspace #{workspace} -scheme '#{scheme}' -configuration '#{configuration}' -destination '#{destination}'"
     end
 
-    def self.archive(scheme, profile, configuration, destination)
-        if scheme.nil? || profile.nil? || configuration.nil? || destination.nil?
+    def self.archive(scheme, provisioning_profile, configuration, destination)
+        if scheme.nil? || provisioning_profile.nil? || configuration.nil? || destination.nil?
             raise(ArgumentError, "parameters can't be nil") 
         end
 
-        sh "ipa build --clean --archive --scheme #{scheme} --configuration #{configuration} --embed #{profile} --destination #{destination}"
+        sh "ipa build --clean --archive --scheme #{scheme} --configuration #{configuration} --embed #{provisioning_profile} --destination #{destination}"
     end
 end
