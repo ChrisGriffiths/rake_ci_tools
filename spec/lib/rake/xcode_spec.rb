@@ -13,7 +13,7 @@ describe 'Testing Xcode Class' do
         sdk = 'sdk'
         build_dir = 'dir'
 
-        expect(XCode).to receive(:sh).with("xcodebuild  -workspace #{workspace} -scheme '#{scheme}' -configuration '#{config}' -sdk #{sdk} CONFIGURATION_BUILD_DIR=#{build_dir}")
+        XCode.should_receive(:sh).with("xcodebuild  -workspace #{workspace} -scheme '#{scheme}' -configuration '#{config}' -sdk #{sdk} CONFIGURATION_BUILD_DIR=#{build_dir}")
            
         XCode.build(workspace,scheme,config,sdk,build_dir)
     end
@@ -28,7 +28,7 @@ describe 'Testing Xcode Class' do
 
     build_case.each do |input|
         it "build project passing nil #{input[:test_name]} throws error" do
-            expect { XCode.build(input[:workspace],input[:scheme],input[:config],input[:sdk],input[:build_dir])}.to raise_error(ArgumentError)
+            expect { XCode::build(input[:workspace],input[:scheme],input[:config],input[:sdk],input[:build_dir])}.to raise_error(ArgumentError)
         end
     end
 
@@ -38,9 +38,9 @@ describe 'Testing Xcode Class' do
         config = 'config'
         destination = 'destination'
 
-        expect(XCode).to receive(:sh).with("xcodebuild test -workspace #{workspace} -scheme '#{scheme}' -configuration '#{config}' -destination '#{destination}'")
+        XCode.should_receive(:sh).with("xcodebuild test -workspace #{workspace} -scheme '#{scheme}' -configuration '#{config}' -destination '#{destination}'")
            
-        XCode.build_and_test(workspace,scheme,config,destination)
+        XCode::build_and_test(workspace,scheme,config,destination)
     end
 
     build_and_test_case = [
@@ -52,7 +52,7 @@ describe 'Testing Xcode Class' do
 
     build_and_test_case.each do |input|
         it "build project passing nil #{input[:test_name]} throws error" do
-            expect { XCode.build_and_test(input[:workspace],input[:scheme],input[:config],input[:destination])}.to raise_error(ArgumentError)
+            expect { XCode::build_and_test(input[:workspace],input[:scheme],input[:config],input[:destination])}.to raise_error(ArgumentError)
         end
     end
 end
