@@ -1,5 +1,5 @@
 module XCode
-    def  self.build(workspace, scheme, configuration, sdk, build_dir)
+    def self.build(workspace, scheme, configuration, sdk, build_dir)
         if workspace.nil? || scheme.nil? || configuration.nil? || sdk.nil? || build_dir.nil?
             raise(ArgumentError, "parameters can't be nil") 
         end
