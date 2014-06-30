@@ -15,11 +15,11 @@ namespace :cucumber do
     desc "Run Cucumber with profile"
     task :profile, [:profile,:features] do |_ , args|
         raise(ArgumentError, "Profile must be defined") if args[:profile].nil?
-        task = Cucumber::Rake::Task.new do |t|
-                t.fork = false
-                t.cucumber_opts = args[:features] unless args[:features].nil?
-                t.profile = args[:profile]
-                t.runner.run
-            end 
+        Cucumber::Rake::Task.new do |t|
+            t.fork = false
+            t.cucumber_opts = args[:features] unless args[:features].nil?
+            t.profile = args[:profile]
+            t.runner.run
+        end 
     end
 end

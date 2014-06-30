@@ -20,9 +20,7 @@ describe "Test Vagrant" do
 
     it "should copy files from defined location" do
         location = "sample/location"
-
         expect(Vagrant).to receive(:copy_file_to_guest).with(location)
-
         Vagrant::task([],location)
     end
 
