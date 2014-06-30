@@ -2,7 +2,6 @@ base_path = File.dirname(__FILE__)
 
 require 'rake'
 
-require File.join(base_path, 'tasks', 'dashboard_task')
 require File.join(base_path, 'tasks', 'cucumber_task')
 require File.join(base_path, 'tasks', 'xcode_task')
 

@@ -55,4 +55,28 @@ describe 'Testing Xcode Class' do
             expect { XCode::build_and_test(input[:workspace],input[:scheme],input[:config],input[:destination])}.to raise_error(ArgumentError)
         end
     end
+
+    it "should achieve project using all parameters" do
+        scheme = 'scheme'
+        profile = 'sample_profile'
+        configuration = 'sample_config'
+        destination = 'output'
+
+        XCode.should_receive(:sh).with("ipa build --clean --archive --scheme #{scheme} --configuration #{configuration} --embed #{profile} --destination #{destination}")
+        
+        XCode::archive(scheme,profile,configuration,destination)
+    end
+
+    archive_cases = [        
+        {:test_name => 'scheme', :scheme => nil, :profile => '', :configuration => '', :destination =>''},
+        {:test_name => 'profile', :scheme => '', :profile => nil, :configuration => '', :destination =>''},
+        {:test_name => 'configuration', :scheme => '', :profile => '', :configuration => nil, :destination =>''},
+        {:test_name => 'destination', :scheme => '', :profile => '', :configuration => '', :destination =>nil}
+    ]
+
+    build_and_test_case.each do |input|
+        it "should archive project passing nil #{input[:test_name]} throws error" do
+            expect { XCode::archive(input[:scheme],input[:profile],input[:configuration],input[:destination])}.to raise_error(ArgumentError)
+        end
+    end
 end
