@@ -1,4 +1,3 @@
-require 'shenzhen'
 namespace :xcode do
     desc "Xcode Build"
     task :build, [:workspace, :scheme, :configuration, :sdk, :buildDir]  do |_, args| 

@@ -1,5 +1,3 @@
-
-
 module XCode
     def self.build(workspace, scheme, configuration, sdk, build_dir)
         if workspace.nil? || scheme.nil? || configuration.nil? || sdk.nil? || build_dir.nil?
@@ -18,6 +16,7 @@ module XCode
     end
 
     def self.archive(scheme, provisioning_profile, configuration, destination)
+        require 'shenzhen'
         if scheme.nil? || provisioning_profile.nil? || configuration.nil? || destination.nil?
             raise(ArgumentError, "parameters can't be nil") 
         end
