@@ -1,4 +1,4 @@
-base_path = File.dirname(__FILE__)
+base_path = File.join(File.dirname(__FILE__),'rake_ci_tools')
 
 require 'rake'
 
