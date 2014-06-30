@@ -4,11 +4,10 @@ module Calabash_Runner
     end
     
     def self.reset_simulator
-        p self.methods
         sh 'calabash-ios sim reset'
     end
 
-    def self.sim_location(bundle_id)
+    def self.sim_location(bundle_id)        
         sh "calabash-ios sim location on #{bundle_id}"
     end
 

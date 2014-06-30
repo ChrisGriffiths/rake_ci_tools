@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'fileutils'
 
 describe "Test Calabash Rakefile" do
     before(:each) do
