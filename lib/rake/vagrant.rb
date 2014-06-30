@@ -1,5 +1,4 @@
 module Vagrant
-
     def self.task(tasks=[], project_location='./')
         begin
             puts "Creating Vagrantbox for Process ID: $$"
