@@ -13,7 +13,7 @@ describe 'Testing Xcode Class' do
         sdk = 'sdk'
         build_dir = 'dir'
 
-        XCode.should_receive(:sh).with("xcodebuild -workspace '#{workspace}'' -scheme '#{scheme}' -configuration '#{config}' -sdk '#{sdk}' CONFIGURATION_BUILD_DIR=#{build_dir}")
+        XCode.should_receive(:sh).with("xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{config}' -sdk '#{sdk}' CONFIGURATION_BUILD_DIR=#{build_dir}")
            
         XCode.build(workspace,scheme,config,sdk,build_dir)
     end
@@ -38,7 +38,7 @@ describe 'Testing Xcode Class' do
         config = 'config'
         destination = 'destination'
 
-        XCode.should_receive(:sh).with("xcodebuild test -workspace #{workspace} -scheme '#{scheme}' -configuration '#{config}' -destination '#{destination}'")
+        XCode.should_receive(:sh).with("xcodebuild test -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{config}' -destination '#{destination}'")
            
         XCode::build_and_test(workspace,scheme,config,destination)
     end
@@ -64,7 +64,7 @@ describe 'Testing Xcode Class' do
         sdk = 'sdk'
         build_dir = 'dir'
 
-        XCode.should_receive(:sh).with("xcodebuild -workspace #{workspace} -scheme '#{scheme}' -configuration '#{config}' -sdk #{sdk} CONFIGURATION_BUILD_DIR=#{build_dir}")
+        XCode.should_receive(:sh).with("xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{config}' -sdk '#{sdk}' CONFIGURATION_BUILD_DIR=#{build_dir}")
         XCode.should_receive(:sh).with("/usr/bin/xcrun -sdk iphoneos PackageApplication -v '#{build_dir}/#{scheme}.app' -o '#{build_dir}/#{scheme}.ipa' --embed '#{profile}'")
         
         XCode::archive(workspace,scheme,config,sdk,profile,build_dir)

@@ -12,7 +12,7 @@ module XCode
             raise(ArgumentError, "parameters can't be nil") 
         end
 
-        sh "xcodebuild test -workspace #{workspace} -scheme '#{scheme}' -configuration '#{configuration}' -destination '#{destination}'"
+        sh "xcodebuild test -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -destination '#{destination}'"
     end
 
     def self.archive(workspace, scheme, configuration, sdk, provisioning_profile, build_dir)
