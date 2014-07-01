@@ -4,6 +4,7 @@
 
 ##What is rake_ci_tools
 rake_ci_tools contains a number of predefined rake tasks for build and testing xcode projects.
+
 It aims to make it easier for all our projects to share tasks to reduce code duplication and improve maintainility
 
 ##Installation
@@ -59,15 +60,19 @@ rake calabash:reset_simulator
 ```
 ###Vagrant
 ####Prerequisite
-Vagrant must be installed
-Project needs to contain a valid Vagrantfile
+[Vagrant](http://docs.vagrantup.com/v2/installation/index.html) must be installed
+
+Project needs to contain a valid [Vagrantfile](http://docs.vagrantup.com/v2/vagrantfile/index.html)
 ####cucumber
 ```
 rake vagrant:ios_cucumber_tests
 ```
-Configured to use profile named "ios"
+Configured to use profile named "ios" 
+
 Creates the vagrant box, copies the working directory then run 3 rake commands
+
     1. bundle
     2. rake setup
     3. rake build
-To use this feature configure your rake file to conform to this formate    
+
+To use this feature configure your rake file to conform to this format 
