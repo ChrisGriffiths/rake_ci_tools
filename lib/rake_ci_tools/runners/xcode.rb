@@ -4,7 +4,7 @@ module XCode
             raise(ArgumentError, "parameters can't be nil") 
         end
 
-        sh "xcodebuild  -workspace #{workspace} -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} CONFIGURATION_BUILD_DIR=#{build_dir}"
+        sh "xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk '#{sdk}' CONFIGURATION_BUILD_DIR=#{build_dir}"
     end
 
     def self.build_and_test(workspace, scheme, configuration, destination)
@@ -15,12 +15,12 @@ module XCode
         sh "xcodebuild test -workspace #{workspace} -scheme '#{scheme}' -configuration '#{configuration}' -destination '#{destination}'"
     end
 
-    def self.archive(scheme, provisioning_profile, configuration, destination)
-        require 'shenzhen'
-        if scheme.nil? || provisioning_profile.nil? || configuration.nil? || destination.nil?
+    def self.archive(workspace, scheme, configuration, sdk, provisioning_profile, build_dir)
+        if workspace.nil? || scheme.nil? || provisioning_profile.nil? || configuration.nil? || build_dir.nil?
             raise(ArgumentError, "parameters can't be nil") 
         end
 
-        sh "ipa build --clean --archive --scheme #{scheme} --configuration #{configuration} --embed #{provisioning_profile} --destination #{destination}"
+        build(workspace, scheme, configuration, sdk, build_dir)        
+        sh "/usr/bin/xcrun -sdk iphoneos PackageApplication -v '#{build_dir}/#{scheme}.app' -o '#{build_dir}/#{scheme}.ipa' --embed '#{provisioning_profile}'"
     end
 end

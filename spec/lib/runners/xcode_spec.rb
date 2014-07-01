@@ -13,7 +13,7 @@ describe 'Testing Xcode Class' do
         sdk = 'sdk'
         build_dir = 'dir'
 
-        XCode.should_receive(:sh).with("xcodebuild  -workspace #{workspace} -scheme '#{scheme}' -configuration '#{config}' -sdk #{sdk} CONFIGURATION_BUILD_DIR=#{build_dir}")
+        XCode.should_receive(:sh).with("xcodebuild -workspace '#{workspace}'' -scheme '#{scheme}' -configuration '#{config}' -sdk '#{sdk}' CONFIGURATION_BUILD_DIR=#{build_dir}")
            
         XCode.build(workspace,scheme,config,sdk,build_dir)
     end
@@ -57,26 +57,31 @@ describe 'Testing Xcode Class' do
     end
 
     it "should achieve project using all parameters" do
+        workspace = 'workspace'
         scheme = 'scheme'
-        profile = 'sample_profile'
-        configuration = 'sample_config'
-        destination = 'output'
+        config = 'config'
+        profile ='provisioning_profile'   
+        sdk = 'sdk'
+        build_dir = 'dir'
 
-        XCode.should_receive(:sh).with("ipa build --clean --archive --scheme #{scheme} --configuration #{configuration} --embed #{profile} --destination #{destination}")
+        XCode.should_receive(:sh).with("xcodebuild -workspace #{workspace} -scheme '#{scheme}' -configuration '#{config}' -sdk #{sdk} CONFIGURATION_BUILD_DIR=#{build_dir}")
+        XCode.should_receive(:sh).with("/usr/bin/xcrun -sdk iphoneos PackageApplication -v '#{build_dir}/#{scheme}.app' -o '#{build_dir}/#{scheme}.ipa' --embed '#{profile}'")
         
-        XCode::archive(scheme,profile,configuration,destination)
+        XCode::archive(workspace,scheme,config,sdk,profile,build_dir)
     end
 
     archive_cases = [        
-        {:test_name => 'scheme', :scheme => nil, :profile => '', :configuration => '', :destination =>''},
-        {:test_name => 'profile', :scheme => '', :profile => nil, :configuration => '', :destination =>''},
-        {:test_name => 'configuration', :scheme => '', :profile => '', :configuration => nil, :destination =>''},
-        {:test_name => 'destination', :scheme => '', :profile => '', :configuration => '', :destination =>nil}
+        {:test_name => 'workspace', :workspace => nil, :scheme => nil, :profile => '', :configuration => '', :destination =>'', :sdk =>''},
+        {:test_name => 'scheme', :workspace => '', :scheme => nil, :profile => '', :configuration => '', :destination =>'', :sdk =>''},
+        {:test_name => 'profile', :workspace => '', :scheme => '', :profile => nil, :configuration => '', :destination =>'', :sdk =>''},
+        {:test_name => 'configuration', :workspace => '', :scheme => '', :profile => '', :configuration => nil, :destination =>'', :sdk =>''},
+        {:test_name => 'destination', :workspace => '', :scheme => '', :profile => '', :configuration => '', :destination =>nil, :sdk =>''},
+        {:test_name => 'sdk', :workspace => '', :scheme => '', :profile => '', :configuration => '', :destination =>'', :sdk =>nil}
     ]
 
     build_and_test_case.each do |input|
         it "should archive project passing nil #{input[:test_name]} throws error" do
-            expect { XCode::archive(input[:scheme],input[:profile],input[:configuration],input[:destination])}.to raise_error(ArgumentError)
+            expect { XCode::archive(input[:workspace], input[:scheme], input[:configuration], input[:sdk], input[:profile], input[:destination])}.to raise_error(ArgumentError)
         end
     end
 end

@@ -50,12 +50,14 @@ describe 'Testing Xcode Rake File' do
   end
 
   it "should call shenzen to build ipa" do
+    workspace = 'workspace'
     scheme = 'scheme'
-    configuration = 'configuration'
+    config = 'config'
+    sdk = 'sdk'
     profile = 'profile'
-    output_dir = 'sample/output'
+    build_dir = 'dir'
 
-    expect(XCode).to receive(:archive).with(scheme,configuration,profile,output_dir)
-    Rake::Task["xcode:archive"].invoke(scheme,configuration,profile,output_dir)
+    expect(XCode).to receive(:archive).with(workspace,scheme,config,sdk,profile,build_dir)
+    Rake::Task["xcode:archive"].invoke(workspace,scheme,config,sdk,profile,build_dir)
   end
 end

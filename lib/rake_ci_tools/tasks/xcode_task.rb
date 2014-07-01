@@ -11,7 +11,7 @@ namespace :xcode do
     end
     
     desc "Achieve ipa"
-    task :archive, [:scheme, :provisioning_profile, :configuration, :destinations] do |_ , args| 
-        XCode::archive(args[:scheme],args[:provisioning_profile],args[:configuration],args[:destinations])     
+    task :archive, [:workspace, :scheme, :configuration, :sdk, :provisioning_profile, :destinations] do |_ , args| 
+        XCode::archive(args[:workspace],args[:scheme],args[:configuration],args[:sdk],args[:provisioning_profile],args[:destinations])     
     end
 end
