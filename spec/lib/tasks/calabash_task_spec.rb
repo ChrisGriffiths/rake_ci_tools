@@ -13,7 +13,8 @@ describe "Test Calabash Rakefile" do
 
     it "should call calabash reset simulator" do
         expect(Calabash_Runner).to receive(:sh).with("calabash-ios sim reset")
-
+        expect(Calabash_Runner).to receive(:close_simulator)    
+        
         Rake::Task['calabash:reset_simulator'].invoke
     end
 
