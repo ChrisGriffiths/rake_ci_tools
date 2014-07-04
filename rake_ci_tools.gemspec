@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "rake_ci_tools"
-  spec.version       = '0.0.2'
+  spec.version       = '0.0.4'
   spec.authors       = ["chris griffiths"]
   spec.email         = ["christopher_griffiths@hotmail.com"]
   spec.summary       = %q{Rake tasks for building, testing and deploying xcode projects}
@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
     Predined Rake tasks for building, testing and deploying xcode projects
     Includes Support for: - XCode: Build, Test
                           - Cucumber: calabash
-                          - Deploy: Testflight 
+                          - Vagrant: Run Cucumber Tests using Vagrant
   EOF
 
   spec.homepage      = "https://github.com/ChrisGriffiths/rake_ci_tools"
