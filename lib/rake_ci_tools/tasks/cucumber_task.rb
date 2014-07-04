@@ -3,11 +3,11 @@ require 'cucumber/rake/task'
 
 namespace :cucumber do
     desc "Run Cucumber Tests"
-    task :run, [:features] do |_ , args|
-        args.with_defaults(:features=>nil)
+    task :run, [:parameters] do |_ , args|
+        args.with_defaults(:parameters=>nil)
         Cucumber::Rake::Task.new do |t|
             t.fork = false
-            t.cucumber_opts = args[:features] unless args[:features].nil?
+            t.cucumber_opts = args[:parameters] unless args[:parameters].nil?
             t.runner.run
         end
     end

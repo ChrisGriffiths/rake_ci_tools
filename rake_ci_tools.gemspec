@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "rake_ci_tools"
-  spec.version       = '0.0.1'
+  spec.version       = '0.0.2'
   spec.authors       = ["chris griffiths"]
   spec.email         = ["christopher_griffiths@hotmail.com"]
   spec.summary       = %q{Rake tasks for building, testing and deploying xcode projects}

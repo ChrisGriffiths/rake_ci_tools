@@ -13,7 +13,7 @@ It aims to make it easier for all our projects to share tasks to reduce code dup
 
 Download and install rake_ci_tool with the following.
 ```
-  gem install rake
+  gem install rake_ci_tools
 ```
 
 ##Usage

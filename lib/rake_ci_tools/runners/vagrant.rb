@@ -1,12 +1,12 @@
 module Vagrant
-    def self.task(tasks=[], project_location='./')
+    def self.task(box_name, tasks=[], project_location='./')
         begin
             puts "Creating Vagrantbox for Process ID: $$"
-            create_box('default')
-            copy_file_to_guest(project_location)
-            tasks.each { |task| command(task) }
+            create_box(box_name)
+            copy_file_to_guest(project_location,box_name)
+            tasks.each { |task| command(task,box_name) }
         ensure
-            destroy_box('default')
+            destroy_box(box_name)
         end
     end
 
@@ -15,43 +15,43 @@ module Vagrant
     end
     
     #ALL BELOW UNTESTED REFACTOR
-    def self.create_box(boxName)
-        sh "vagrant up #{boxName} --provision"
+    def self.create_box(box_name)
+        sh "vagrant up #{box_name} --provision"
     end
 
-    def self.destroy_box(boxName)
-        puts "Destorying: #{boxName}"
+    def self.destroy_box(box_name)
+        puts "Destorying: #{box_name}"
         begin
-            get_file_from_guest('./',"#{remoteLocation}/ci-artifacts",boxName)
+            get_file_from_guest('./',"#{remoteLocation}/ci-artifacts",box_name)
         ensure
-            sh "vagrant destroy -f #{boxName}"
+            sh "vagrant destroy -f #{box_name}"
         end
     end
 
-    def self.command(command)
-        sh "vagrant ssh --command \"cd #{remoteLocation} && #{command}\""
+    def self.command(command, box_name)
+        sh "vagrant ssh #{box_name} --command \"cd #{remoteLocation} && #{command}\""
     end
 
-     def self.copy_file_to_guest(localLocation, boxName = "")
-          serverIp = get_ssh_details(/(?<=HostName ).*/, boxName)
-          scp(localLocation,"vagrant@#{serverIp}:#{remoteLocation}", boxName)
+     def self.copy_file_to_guest(localLocation, box_name)
+          serverIp = get_ssh_details(/(?<=HostName ).*/, box_name)
+          scp(localLocation,"vagrant@#{serverIp}:#{remoteLocation}", box_name)
     end
 
-    def self.get_file_from_guest(localLocation, boxName = "")
-        serverIp = get_ssh_details(/(?<=HostName ).*/,boxName)
-        scp("vagrant@#{serverIp}:#{remoteLocation}",localLocation,boxName)
+    def self.get_file_from_guest(localLocation, box_name)
+        serverIp = get_ssh_details(/(?<=HostName ).*/,box_name)
+        scp("vagrant@#{serverIp}:#{remoteLocation}",localLocation,box_name)
     end
 
-    def self.scp(from, to, boxName="")
-        portNum = get_ssh_details(/(?<=Port ).*/,boxName)
-        keyPath = get_ssh_details(/(?<=IdentityFile ).*/,boxName)
+    def self.scp(from, to, box_name)
+        portNum = get_ssh_details(/(?<=Port ).*/,box_name)
+        keyPath = get_ssh_details(/(?<=IdentityFile ).*/,box_name)
 
         puts "PortNum: #{portNum}"
         sh "scp -o 'StrictHostKeyChecking no' -i #{keyPath} -P #{portNum} -r #{from} #{to}"
     end
 
-    def self.get_ssh_details(regex, boxName="")
-        response = `vagrant ssh-config #{boxName}`
+    def self.get_ssh_details(regex, box_name)
+        response = `vagrant ssh-config #{box_name}`
         return response.match(regex)
     end
 end
