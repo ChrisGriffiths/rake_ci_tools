@@ -29,7 +29,7 @@ module Vagrant
     end
 
     def self.command(command, box_name)
-        sh "vagrant #{box_name} ssh --command \"cd #{remoteLocation} && #{command}\""
+        sh "vagrant ssh #{box_name} --command \"cd #{remoteLocation} && #{command}\""
     end
 
      def self.copy_file_to_guest(localLocation, box_name)
