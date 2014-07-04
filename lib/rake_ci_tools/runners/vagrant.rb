@@ -1,7 +1,7 @@
 module Vagrant
     def self.task(box_name, tasks=[], project_location='./')
         begin
-            puts "Creating Vagrantbox for Process ID: $$"
+            puts "Creating Vagrantbox for Process ID: #{Process.pid}"
             create_box(box_name)
             copy_file_to_guest(project_location,box_name)
             tasks.each { |task| command(task,box_name) }
