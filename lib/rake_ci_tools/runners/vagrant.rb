@@ -22,7 +22,7 @@ module Vagrant
     def self.destroy_box(box_name)
         puts "Destorying: #{box_name}"
         begin
-            get_file_from_guest('./',"#{remoteLocation}/ci-artifacts",box_name)
+            get_file_from_guest('./',box_name)
         ensure
             sh "vagrant destroy -f #{box_name}"
         end
