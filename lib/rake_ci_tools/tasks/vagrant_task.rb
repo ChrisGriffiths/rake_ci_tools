@@ -1,6 +1,6 @@
 namespace :vagrant do
-    task :ios_cucumber_tests do
-        
+    task :ios_cucumber_tests, :box_name do |_, args|
+        args.with_defaults(:box_name=>'default')
         task_list = []
         task_list << 'bundle'
         task_list << 'rake setup'
@@ -14,6 +14,6 @@ namespace :vagrant do
             task_list << "rake cucumber:profile['ios','#{feature_list}']"
         end
 
-        Vagrant::task(task_list)
+        Vagrant::task(args[:box_name], task_list)
     end
 end

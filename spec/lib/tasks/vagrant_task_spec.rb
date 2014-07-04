@@ -16,7 +16,7 @@ describe "Test Vagrant Rake" do
 
         task_array = ['bundle', 'rake setup', 'rake build', "rake cucumber:profile['ios','./SampleLocation']"]
 
-        expect(Vagrant).to receive(:task).with(task_array)
+        expect(Vagrant).to receive(:task).with('default',task_array)
 
         Rake::Task["vagrant:ios_cucumber_tests"].invoke
     end
@@ -26,16 +26,25 @@ describe "Test Vagrant Rake" do
 
         task_array = ['bundle', 'rake setup', 'rake build', "rake cucumber:profile['ios','./SampleLocation ./SampleLocation1']"]
 
-        expect(Vagrant).to receive(:task).with(task_array)
+        expect(Vagrant).to receive(:task).with('default',task_array)
 
         Rake::Task["vagrant:ios_cucumber_tests"].invoke
     end
 
-    it "should pass empty string when FEATURE_LIST ENV is not defined" do
+    it "should pass empty string when FEATURE_LIST ENV if not defined" do
         task_array = ['bundle', 'rake setup', 'rake build', "rake cucumber:profile['ios']"]
 
-        expect(Vagrant).to receive(:task).with(task_array)
+        expect(Vagrant).to receive(:task).with('default',task_array)
 
         Rake::Task["vagrant:ios_cucumber_tests"].invoke
+    end
+
+    it "when a boxname is set should set boxName" do
+        boxName="boxName"
+        task_array = ['bundle', 'rake setup', 'rake build', "rake cucumber:profile['ios']"]
+
+        expect(Vagrant).to receive(:task).with(boxName,task_array)
+
+        Rake::Task["vagrant:ios_cucumber_tests"].invoke(boxName)
     end
 end
