@@ -13,6 +13,10 @@ module Vagrant
     def self.remoteLocation
         ENV['VAGANT_REMOTE_DEST'] || 'vagrant_build'
     end
+
+    def self.artifact_path
+        ENV['ARTIFACT_PATH'] || 'ci-artifacts'
+    end
     
     #ALL BELOW UNTESTED REFACTOR
     def self.create_box(box_name)
@@ -22,7 +26,7 @@ module Vagrant
     def self.destroy_box(box_name)
         puts "Destorying: #{box_name}"
         begin
-            get_file_from_guest('./',box_name)
+            get_file_from_guest("./#{artifact_path}",box_name)
         ensure
             sh "vagrant destroy -f #{box_name}"
         end
